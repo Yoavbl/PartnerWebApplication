@@ -1,32 +1,13 @@
 import boto3
-from botocore.exceptions import NoCredentialsError
 
-
-ACCESS_KEY = "AKIASCO5IK3NDXQ67J4D"
-SECRET_KEY = "ZDDgsPDtf9KPdlWsKzK8+3A0jWQMQ+HOzYYnR3tw"
 TABLE_NAME = "users"
 AWS_REGION = "eu-north-1"
 BUCKET_NAME = "examplemedai23"
 
-dynamodb = boto3.client(
-    "dynamodb",
-    aws_access_key_id=ACCESS_KEY,
-    aws_secret_access_key=SECRET_KEY,
-    region_name=AWS_REGION,
-)
-s3_client = boto3.client(
-    "s3",
-    region_name="us-west-2",
-    aws_access_key_id=ACCESS_KEY,
-    aws_secret_access_key=SECRET_KEY,
-)
+dynamodb = boto3.client("dynamodb", region_name=AWS_REGION)
+s3_client = boto3.client("s3", region_name="us-west-2")
 
-rekognition_client = boto3.client(
-    "rekognition",
-    region_name="us-west-2",
-    aws_access_key_id=ACCESS_KEY,
-    aws_secret_access_key=SECRET_KEY,
-)
+rekognition_client = boto3.client("rekognition", region_name="us-west-2")
 
 
 def upload_picture(file):
@@ -47,7 +28,7 @@ def save_user_data(data):
             "height": {"S": data["height"]},
             "age": {"S": str(data["age"])},
             "gender": {"S": data["gender"]},
-            "color": {"S": data["color"]},
+            "hobby": {"S": data["hobby"]},
             "education": {"S": data["education"]},
             "designation": {"S": data["designation"]},
             "profile_picture": {"S": data["profile_picture"]},
@@ -135,7 +116,7 @@ def convert_to_dict(data):
         "height": data["height"]["S"],
         "age": data["age"]["S"],
         "gender": data["gender"]["S"],
-        "color": data["color"]["S"],
+        "hobby": data["hobby"]["S"],
         "education": data["education"]["S"],
         "designation": data["designation"]["S"],
         "profile_picture": data["profile_picture"]["S"],
